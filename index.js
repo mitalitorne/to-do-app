@@ -6,9 +6,9 @@ const taskList = document.getElementById("taskList");
 const toggleInputBtn = document.getElementById("toggleInputBtn");
 const inputSection = document.getElementById("input-section");
 const progressFill = document.querySelector(".progress-fill");
+const progressBar = document.querySelector(".progress-bar");
 
 inputSection.classList.add('hidden');
-
 
 toggleInputBtn.addEventListener("click", () => {
     inputSection.classList.toggle("hidden");
@@ -61,6 +61,8 @@ const createTasks = (taskValue, isCompleted = false) => {
 };
 
 addBtn.addEventListener("click", ()=>{
+
+    progressBar.classList.remove('hidden');
     let taskValue = taskInput.value.trim();
 
     if(taskValue === ""){
@@ -85,6 +87,7 @@ taskInput.addEventListener("keydown", (event) => {
 //UPDATE PROGRESS FUNCTIONALITY
 
 const updateProgress = () => {
+   
     let totalTasks = document.querySelectorAll('#taskList li').length;
     let completedTasks = document.querySelectorAll('#taskList .completed').length;
 
@@ -92,11 +95,21 @@ const updateProgress = () => {
 
     let percentage = 0;
 
+    
     if(totalTasks > 0){
         percentage = (completedTasks / totalTasks) * 100;
     }
     
     progressFill.style.width = percentage + "%";
+
+    if(totalTasks === 0){
+        progressBar.classList.add("hidden");
+        progressText.innerText = "No tasks added";
+    }else{
+        progressBar.classList.remove("hidden");
+    }
+
+    
 };
 
 //SAVE ALL TASKS 
